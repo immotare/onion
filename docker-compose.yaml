@@ -1,0 +1,9 @@
+version: '3' 
+services:
+  backend:
+    build: ./backend
+    tty: true
+    volumes:
+      - ./backend/app:/go/src/app
+    ports:
+      - '127.0.0.1:8080:80'
