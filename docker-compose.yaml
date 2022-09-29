@@ -4,6 +4,14 @@ services:
     build: ./backend
     tty: true
     volumes:
-      - ./backend/app:/go/src/app
+      - ./backend/app:/app
     ports:
-      - '127.0.0.1:8080:80'
+      - '127.0.0.1:8000:8000'
+  frontend:
+    build: ./frontend
+    tty: true
+    volumes:
+      - ./frontend/app:/app
+    ports:
+      - '127.0.0.1:3000:3000'
+    
