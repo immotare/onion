@@ -5,6 +5,10 @@ services:
     tty: true
     volumes:
       - ./backend/app:/app
+      - $FIREBASE_CREDENTIAL:/credentials/firebase.json
+    environment:
+      - STORAGE_BUCKET=$STORAGE_BUCKET
+      - FIREBASE_CREDENTIAL=/credentials/firebase.json
     ports:
       - '127.0.0.1:8000:8000'
   frontend:
@@ -14,4 +18,3 @@ services:
       - ./frontend/app:/app
     ports:
       - '127.0.0.1:3000:3000'
-    
