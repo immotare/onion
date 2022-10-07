@@ -17,5 +17,13 @@ func NewFirebaseBucketHandler(bucket *storage.BucketHandle) *FirebaseBucketHandl
 }
 
 func (firebaseAppHandler *FirebaseBucketHandler) IndexItems(w http.ResponseWriter, r *http.Request) {
+}
 
+func (firebaseAppHandler *FirebaseBucketHandler) CreateItem(w http.ResponseWriter, r *http.Request) {
+}
+
+func (firebaseAppHandler *FirebaseBucketHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
+}
+
+func (firebaseAppHandler *FirebaseBucketHandler) DeleteItem(w http.ResponseWriter, r *http.Request) {
 }
