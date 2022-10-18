@@ -8,9 +8,9 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-func IndexItems(bucket *storage.BucketHandle) ([]string, error) {
+func IndexItemsByUserId(bucket *storage.BucketHandle, uid string) ([]string, error) {
 	query := &storage.Query{
-		Prefix: "",
+		Prefix: uid + "/", // ディレクトリとして指定
 	}
 	itr := bucket.Objects(context.Background(), query)
 

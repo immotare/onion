@@ -17,6 +17,7 @@ func OkResponseHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	log.Println("server started")
 	storageBucketName := os.Getenv("STORAGE_BUCKET")
 	firebaseCredentialPath := os.Getenv("FIREBASE_CREDENTIAL")
 	firebaseApp, err := firebaseutils.NewApp(storageBucketName, firebaseCredentialPath)
@@ -34,9 +35,9 @@ func main() {
 		log.Println("failed to create firebase bucket:", err)
 	}
 
-	firebaseBucketHandler := handler.NewFirebaseBucketHandler(firebaseStorageBucket)
+	firebaseBucketHandler := handler.NewFirebaseBucketHandler(firebaseStorageClient, firebaseStorageBucket)
 
-	http.HandleFunc("/", firebaseBucketHandler.IndexItems)
+	http.HandleFunc("/index", firebaseBucketHandler.IndexItems)
 
 	err = http.ListenAndServe(":8000", nil)
 	if err != nil {

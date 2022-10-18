@@ -35,7 +35,7 @@ func CreateStorageBucketClient(storageBucketName string, firebaseCredentialPath 
 	return firebaseStorageBucket, nil
 }
 
-func TestIndexItems(t *testing.T) {
+func TestIndexItemsByUserId(t *testing.T) {
 	storageBucketName := os.Getenv("STORAGE_BUCKET")
 	firebaseCredentialPath := os.Getenv("FIREBASE_CREDENTIAL")
 
@@ -45,7 +45,7 @@ func TestIndexItems(t *testing.T) {
 		t.Errorf("[Failed]:%v", err)
 	}
 
-	fileNames, err := IndexItems(firebaseStorageBucket)
+	fileNames, err := IndexItemsByUserId(firebaseStorageBucket, "test")
 
 	if err != nil {
 		t.Errorf("[Failed]:%v", err)
