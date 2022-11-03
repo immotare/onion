@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../firebase_utils/authContext";
 import { Link } from "react-router-dom";
 import { firebaseAuth } from "../firebase_utils/auth";
-import { ApiClient } from "../api/api";
+import { ApiClient, StorageItemNames } from "../api/api";
 
 export const Home : React.FC = () => {
   const { user } = useContext(AuthContext);
@@ -14,7 +14,11 @@ export const Home : React.FC = () => {
       console.log(user.uid);
       ApiClient.getStorageItemList(user.uid)
         .then((response) => {
-          console.log(response);
+          response.json().then(
+            (data : StorageItemNames) => {
+              setStorageItems(data.itemNames);
+            }
+          );
         })
         .catch((reason) => {
           console.log(reason);

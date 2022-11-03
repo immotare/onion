@@ -7,6 +7,7 @@ import (
 
 	cstorage "cloud.google.com/go/storage"
 	fbstorage "firebase.google.com/go/storage"
+	"github.com/immotare/onion/repository"
 )
 
 type FirebaseBucketHandler struct {
@@ -33,10 +34,21 @@ func (firebaseAppHandler *FirebaseBucketHandler) IndexItems(w http.ResponseWrite
 		log.Printf("[] key: %s, value:%s", k, v)
 	}
 
-	log.Printf("uid:%s", r.Form.Get("uid"))
-	result := map[string]string{
-		"itemNames": r.Form.Get("uid"),
+	uid := r.Form.Get("uid")
+	log.Printf("uid:%s", uid)
+
+	itemNames, err := repository.IndexItemsByUserId(firebaseAppHandler.bucket, uid)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
+
+	result := map[string][]string{
+		"itemNames": itemNames,
+	}
+
+	log.Printf("index result:%v", itemNames)
 
 	res, err := json.Marshal(result)
 	if err != nil {
@@ -48,7 +60,7 @@ func (firebaseAppHandler *FirebaseBucketHandler) IndexItems(w http.ResponseWrite
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT")
 
-	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 }
 

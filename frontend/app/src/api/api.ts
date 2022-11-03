@@ -6,11 +6,11 @@ const apiUrls = {
   storageItemList: urlJoin(baseUrl, '/index'),
 }
 
-type StorageItemList = {
+export type StorageItemNames = {
   itemNames: string[],
 }
 
-function getStorageItemList (uid : string) {
+function getStorageItemList (uid : string) : Promise<Response> {
   const params = new URLSearchParams();
   params.append("uid", uid);
   return fetch(apiUrls.storageItemList, 
